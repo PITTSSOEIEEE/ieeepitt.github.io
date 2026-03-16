@@ -1,7 +1,7 @@
 # IEEE Pitt Student Branch — Website
 
 The official website for the IEEE University of Pittsburgh Student Branch.  
-Live site: [https://ieeepitt.github.io](https://ieeepitt.github.io)
+Live site: [https://pittssoeieee.github.io/ieeepitt.github.io/](https://pittssoeieee.github.io/ieeepitt.github.io/)
 
 ---
 

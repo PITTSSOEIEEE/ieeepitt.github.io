@@ -136,11 +136,14 @@
     .join-card h3 { font-size: 1.12rem; font-weight: 600; margin-bottom: .45rem; }
     .join-card p { font-size: .88rem; color: rgba(255,255,255,.68); margin-bottom: 1.5rem; line-height: 1.55; }
     .email-form { display: flex; flex-direction: column; gap: .7rem; }
-    .email-form input {
+    .email-form input,
+    .email-form select {
       padding: .68rem 1rem; border-radius: 6px; border: none;
-      font-size: .9rem; outline: none; font-family: 'Inter', sans-serif; width: 100%;
+      font-size: .9rem; outline: none; font-family: 'Inter', sans-serif;
+      width: 100%; color: var(--text-mid);
     }
-    .email-form input:focus { box-shadow: 0 0 0 3px var(--ieee-gold); }
+    .email-form input:focus,
+    .email-form select:focus { box-shadow: 0 0 0 3px var(--ieee-gold); }
 
     /* FOOTER */
     footer {
@@ -205,7 +208,7 @@
   <div class="section-inner">
     <div class="section-header">
       <h2>Upcoming Events</h2>
-      <p>Workshops, networking nights, and more — open to all Pitt engineers.</p>
+      <p>Workshops, professional development, social activites, and more — open to all Pitt engineers.</p>
       <div class="section-divider"></div>
     </div>
     <div class="events-grid" id="events-grid"><!-- Populated by JS --></div>
@@ -245,10 +248,20 @@
       <div class="join-card">
         <div class="icon">📬</div>
         <h3>Mailing List</h3>
-        <p>Get newsletters, event announcements, and opportunities sent straight to your inbox.</p>
+        <p>Get weekly updates, event announcements, and opportunities sent straight to your inbox.</p>
         <div class="email-form">
-          <input type="text"  id="email-name" placeholder="Your Name"       autocomplete="name"  />
-          <input type="email" id="email-addr" placeholder="Your Pitt Email"  autocomplete="email" />
+          <input type="text"  id="ml-name"  placeholder="Full Name (ex: John Doe)"     autocomplete="name"  />
+          <input type="email" id="ml-email" placeholder="Pitt Email (ex: abc123@pitt.edu)" autocomplete="email" />
+          <select id="ml-year">
+            <option value="" disabled selected>Your Year</option>
+            <option>Freshman</option>
+            <option>Sophomore</option>
+            <option>Junior</option>
+            <option>Senior</option>
+            <option>Grad Student</option>
+            <option>Other</option>
+          </select>
+          <input type="text" id="ml-major" placeholder="Your Major" autocomplete="off" />
           <button class="btn btn-gold" onclick="submitEmail()">Subscribe</button>
         </div>
       </div>
@@ -272,155 +285,156 @@
 <div id="toast"></div>
 
 <script>
-/* ================================================================
- *  ✏️  EDITABLE DATA  —  The only section editors need to change.
- *
- *  HOW TO EDIT:
- *    1. Open this file in any text editor (VS Code recommended).
- *    2. Change values inside the DATA block below.
- *    3. Save and push to GitHub — the site updates automatically.
- * ================================================================ */
+  /* ================================================================
+   *  ✏️  EDITABLE DATA  —  The only section editors need to change.
+   *
+   *  HOW TO EDIT:
+   *    1. Open this file in any text editor (VS Code recommended).
+   *    2. Change values inside the DATA block below.
+   *    3. Save and push to GitHub — the site updates automatically.
+   * ================================================================ */
 
-// ----------------------------------------------------------------
-// 🔗  GROUPME LINK
-//     Get this from: GroupMe app → Your group → Share → Copy link
-// ----------------------------------------------------------------
-const GROUPME_LINK = "https://groupme.com/join_group/YOUR_GROUP_ID/YOUR_TOKEN";
+  // ----------------------------------------------------------------
+  // 🔗  GROUPME LINK
+  //     Get this from: GroupMe app → Your group → Share → Copy link
+  // ----------------------------------------------------------------
+  const GROUPME_LINK = "http://groupme.com/join_group/110718940/tRj7h0zB";
 
-// ----------------------------------------------------------------
-// 📬  MAILING LIST  (Google Form integration)
-//
-//     Step 1: Create a Google Form with fields for Name + Email.
-//     Step 2: Open the form, click the 3-dot menu → "Get pre-filled link".
-//             Fill in dummy values, copy the URL. It will look like:
-//             https://docs.google.com/forms/d/e/XXXX/viewform?entry.111=Name&entry.222=Email
-//     Step 3: Paste the base URL (up to /viewform) as MAILING_LIST_FORM_URL.
-//     Step 4: Copy the entry IDs (e.g. "entry.1234567890") into the fields below.
-//
-//     If you leave MAILING_LIST_FORM_URL empty (""), clicking Subscribe
-//     will open the user's email client as a fallback.
-// ----------------------------------------------------------------
-const MAILING_LIST_FORM_URL   = ""; // e.g. "https://docs.google.com/forms/d/e/YOUR_ID/formResponse"
-const MAILING_LIST_NAME_FIELD  = "entry.000000000"; // Replace with your actual entry ID
-const MAILING_LIST_EMAIL_FIELD = "entry.111111111"; // Replace with your actual entry ID
+  // ----------------------------------------------------------------
+  // 📬  MAILING LIST  (Google Form integration)
+  //
+  //     HOW TO GET ENTRY IDs:
+  //       1. Open your Google Form as an editor.
+  //       2. Click ⋮ (top right) → "Get pre-filled link".
+  //       3. Fill in a dummy value in every field → click "Get link" → copy the URL.
+  //       4. The URL will look like:
+  //            .../viewform?entry.111111111=John&entry.222222222=john@pitt.edu&entry.333333333=Junior&entry.444444444=ECE
+  //       5. Copy each entry.XXXXXXXXX number into the matching field below.
+  //       6. Change MAILING_LIST_FORM_URL to end in /formResponse (not /viewform).
+  //
+  //     Leave MAILING_LIST_FORM_URL as "" to fall back to opening the user's email client.
+  // ----------------------------------------------------------------
+  const MAILING_LIST_FORM_URL   = "https://docs.google.com/forms/d/e/1FAIpQLSd1NX5nseBhArTyYiKKXSyX545rmLtdv6NfmlTiwOHUn9TD7g/formResponse";
+  const MAILING_LIST_NAME_FIELD  = "entry.402093283"; // ← Replace with entry ID for Name
+  const MAILING_LIST_EMAIL_FIELD = "entry.216097327"; // ← Replace with entry ID for Email
+  const MAILING_LIST_YEAR_FIELD  = "entry.1102550764"; // ← Replace with entry ID for Year
+  const MAILING_LIST_MAJOR_FIELD = "entry.1704293092"; // ← Replace with entry ID for Major
 
-// ----------------------------------------------------------------
-// 📅  EVENTS
-//
-//     Add an object to add an event. Remove one to delete it.
-//     Fields:
-//       title    — Event name
-//       date     — "YYYY-MM-DD" (used for sorting; displayed nicely)
-//       time     — Display string, e.g. "6:00 PM"
-//       location — Room / building
-//       desc     — Short blurb shown on the card
-//       link     — RSVP or info URL. Use "#" if none.
-//       linkText — Button label (optional; defaults to "Learn More")
-// ----------------------------------------------------------------
-const EVENTS = [
-  {
-    title:    "PCB Design Workshop",
-    date:     "2026-03-22",
-    time:     "6:00 PM",
-    location: "Benedum Hall 219",
-    desc:     "Hands-on intro to KiCad for designing your first printed circuit board. No prior experience needed.",
-    link:     "#",
-    linkText: "RSVP"
-  },
-  {
-    title:    "Industry Networking Night",
-    date:     "2026-04-03",
-    time:     "5:30 PM",
-    location: "Alumni Hall Ballroom",
-    desc:     "Connect with engineers from local companies. Business casual dress recommended.",
-    link:     "#",
-    linkText: "Learn More"
-  },
-  {
-    title:    "IEEE General Body Meeting",
-    date:     "2026-04-10",
-    time:     "7:00 PM",
-    location: "Benedum Hall 157",
-    desc:     "Monthly GBM covering upcoming events, officer updates, and open Q&A for members.",
-    link:     "#",
-    linkText: "Add to Calendar"
+  // ----------------------------------------------------------------
+  // 📅  EVENTS
+  //
+  //     Add an object to add an event. Remove one to delete it.
+  //     Fields:
+  //       title    — Event name
+  //       date     — "YYYY-MM-DD" (used for sorting; displayed nicely)
+  //       time     — Display string, e.g. "6:00 PM"
+  //       location — Room / building
+  //       desc     — Short blurb shown on the card
+  //       link     — RSVP or info URL. Use "#" if none.
+  //       linkText — Button label (optional; defaults to "Learn More"). Use "-" to hide button.
+  // ----------------------------------------------------------------
+  const EVENTS = [
+    {
+      title:    "Chicken Crawl",
+      date:     "2026-03-20",
+      time:     "6:30 PM",
+      location: "Benedum Hall 102",
+      desc:     "Join us on our crawl to the many chicken restaurants in Oakland for some free chicken!",
+      link:     "https://docs.google.com/forms/d/e/1FAIpQLSfcjoxPPTr_QYytei_bxkYzLfF0OYUJDnQ-RmZEIXc30fRdVA/closedform",
+      linkText: "RSVP"
+    },
+    {
+      title:    "Arduino Workshop Part 2",
+      date:     "2026-03-25",
+      time:     "4:30 PM",
+      location: "Alumni Hall Ballroom",
+      desc:     "Had technical difficulties? Want more Arduino IDE practice? Missed the first workshop? Run it back with us!",
+      link:     "https://docs.google.com/forms/d/e/1FAIpQLSf0p5Hux3hFg2nxiTg70PlzAXz2a-1NAc4DU5TqLpcGCVHIWg/viewform?usp=header",
+      linkText: "RSVP"
+    },
+    {
+      title:    "IEEE General Body Meeting (Planning in Progress)",
+      date:     "2026-03-31",
+      time:     "5:00 PM",
+      location: "Benedum Hall 1223",
+      desc:     "Monthly GBM covering upcoming events, officer updates, elections, and open Q&A for members.",
+      link:     "#",
+      linkText: "-"
+    },
+    {
+      title:    "Finals Study Session (Planning in Progress)",
+      date:     "2026-04-25",
+      time:     "10:00 AM",
+      location: "TBD",
+      desc:     "Join us for a finals study session with other IEEE members that have taken the classes that you are right now! P.S. Don't miss out on the free Dunkin Donuts!!!",
+      link:     "#",
+      linkText: "-"
+    }
+  ];
+
+  // ----------------------------------------------------------------
+  // 🛍️  MERCH
+  //
+  //     Add an object to add a product. Remove one to hide it.
+  //     Fields:
+  //       name      — Product name
+  //       desc      — Short description
+  //       price     — Display string, e.g. "$25.00"
+  //       stripeUrl — Stripe Payment Link OR any external URL (e.g. a Google Form for free items)
+  //       image     — Path to product photo, e.g. "img/tshirt.jpg"
+  //                   Leave as "" to show a placeholder box.
+  // ----------------------------------------------------------------
+  const MERCH = [
+    {
+      name:      "IEEE Sophomore Shirts",
+      desc:      "Sophomore shirts for students that have completed the '02s. Available in sizes S–XXL.",
+      price:     "FREE WITH SIGNUP",
+      stripeUrl: "https://docs.google.com/forms/d/e/1FAIpQLScWAgWg6Lukr_TsFuwt9OinVFxwLQpKONAraFh_10ZH-9FrWg/viewform?usp=header",
+      image:     "merchandise_images/Soph_Shirt_Spring26.png"
+    }
+  ];
+
+  /* ================================================================
+   *  ⚙️  RENDERING LOGIC
+   *      Editors should not need to change anything below this line.
+   * ================================================================ */
+
+  function fmtDate(str) {
+    const [y,m,d] = str.split("-").map(Number);
+    return new Date(y,m-1,d).toLocaleDateString("en-US",{weekday:"short",month:"long",day:"numeric",year:"numeric"});
   }
-];
 
-// ----------------------------------------------------------------
-// 🛍️  MERCH
-//
-//     Add an object to add a product. Remove one to hide it.
-//     Fields:
-//       name      — Product name
-//       desc      — Short description
-//       price     — Display string, e.g. "$25.00"
-//       stripeUrl — Your Stripe Payment Link (from Stripe Dashboard → Payment Links)
-//       image     — Path to product photo, e.g. "img/tshirt.jpg"
-//                   Leave as "" to show a placeholder box.
-// ----------------------------------------------------------------
-const MERCH = [
-  {
-    name:      "IEEE Pitt T-Shirt",
-    desc:      "Classic unisex tee with IEEE Pitt logo. Available in sizes S–XXL.",
-    price:     "$20.00",
-    stripeUrl: "https://buy.stripe.com/YOUR_LINK_HERE",
-    image:     "" // e.g. "img/tshirt.jpg"
-  },
-  {
-    name:      "IEEE Pitt Hoodie",
-    desc:      "Heavyweight pullover hoodie. Perfect for late-night lab sessions.",
-    price:     "$40.00",
-    stripeUrl: "https://buy.stripe.com/YOUR_LINK_HERE",
-    image:     ""
-  },
-  {
-    name:      "Sticker Pack",
-    desc:      "Set of 4 die-cut vinyl stickers. Water-resistant and laptop-ready.",
-    price:     "$5.00",
-    stripeUrl: "https://buy.stripe.com/YOUR_LINK_HERE",
-    image:     ""
+  function renderEvents() {
+    const g = document.getElementById("events-grid");
+    if (!EVENTS.length) {
+      g.innerHTML = '<p class="no-events">No upcoming events right now — check back soon!</p>';
+      return;
+    }
+    g.innerHTML = [...EVENTS]
+            .sort((a,b) => a.date.localeCompare(b.date))
+            .map(ev => {
+              const hideBtn = ev.linkText === "-";
+              return `
+        <div class="event-card">
+          <div class="event-date-badge">
+            <span class="dot"></span>${fmtDate(ev.date)} &nbsp;·&nbsp; ${ev.time}
+          </div>
+          <div class="event-body">
+            <h3>${ev.title}</h3>
+            <p class="event-location">📍 ${ev.location}</p>
+            <p class="event-desc">${ev.desc}</p>
+            ${hideBtn ? "" : `<a href="${ev.link}" class="btn btn-blue" target="_blank" rel="noopener">${ev.linkText||"Learn More"}</a>`}
+          </div>
+        </div>`;
+            }).join("");
   }
-];
 
-/* ================================================================
- *  ⚙️  RENDERING LOGIC
- *      Editors should not need to change anything below this line.
- * ================================================================ */
-
-function fmtDate(str) {
-  const [y,m,d] = str.split("-").map(Number);
-  return new Date(y,m-1,d).toLocaleDateString("en-US",{weekday:"short",month:"long",day:"numeric",year:"numeric"});
-}
-
-function renderEvents() {
-  const g = document.getElementById("events-grid");
-  if (!EVENTS.length) {
-    g.innerHTML = '<p class="no-events">No upcoming events right now — check back soon!</p>';
-    return;
-  }
-  g.innerHTML = [...EVENTS]
-    .sort((a,b) => a.date.localeCompare(b.date))
-    .map(ev => `
-      <div class="event-card">
-        <div class="event-date-badge">
-          <span class="dot"></span>${fmtDate(ev.date)} &nbsp;·&nbsp; ${ev.time}
-        </div>
-        <div class="event-body">
-          <h3>${ev.title}</h3>
-          <p class="event-location">📍 ${ev.location}</p>
-          <p class="event-desc">${ev.desc}</p>
-          <a href="${ev.link}" class="btn btn-blue" target="_blank" rel="noopener">${ev.linkText||"Learn More"}</a>
-        </div>
-      </div>`).join("");
-}
-
-function renderMerch() {
-  document.getElementById("merch-grid").innerHTML = MERCH.map(item => `
+  function renderMerch() {
+    document.getElementById("merch-grid").innerHTML = MERCH.map(item => `
     <div class="merch-card">
       ${item.image
-        ? `<img class="merch-img" src="${item.image}" alt="${item.name}" />`
-        : `<div class="merch-img-placeholder">Product Photo</div>`}
+            ? `<img class="merch-img" src="${item.image}" alt="${item.name}" />`
+            : `<div class="merch-img-placeholder">Product Photo</div>`}
       <div class="merch-body">
         <h3>${item.name}</h3>
         <p class="merch-desc">${item.desc}</p>
@@ -430,43 +444,52 @@ function renderMerch() {
         </div>
       </div>
     </div>`).join("");
-}
-
-function submitEmail() {
-  const name  = document.getElementById("email-name").value.trim();
-  const email = document.getElementById("email-addr").value.trim();
-  if (!name || !email)            return showToast("⚠️ Please enter your name and email.");
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showToast("⚠️ Please enter a valid email address.");
-
-  if (MAILING_LIST_FORM_URL) {
-    const body = new URLSearchParams();
-    body.append(MAILING_LIST_NAME_FIELD,  name);
-    body.append(MAILING_LIST_EMAIL_FIELD, email);
-    fetch(MAILING_LIST_FORM_URL, { method:"POST", mode:"no-cors", body })
-      .then(() => {
-        showToast("✅ You're subscribed! Check your inbox soon.");
-        document.getElementById("email-name").value = "";
-        document.getElementById("email-addr").value = "";
-      })
-      .catch(() => showToast("⚠️ Something went wrong — please try again."));
-  } else {
-    window.location.href =
-      `mailto:ieeepitt@pitt.edu?subject=Mailing%20List%20Signup&body=Name:%20${encodeURIComponent(name)}%0AEmail:%20${encodeURIComponent(email)}`;
-    showToast("✅ Opening your email client — thanks!");
   }
-}
 
-function showToast(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 3600);
-}
+  function submitEmail() {
+    const name  = document.getElementById("ml-name").value.trim();
+    const email = document.getElementById("ml-email").value.trim();
+    const year  = document.getElementById("ml-year").value;
+    const major = document.getElementById("ml-major").value.trim();
 
-// Init
-document.getElementById("groupme-btn").href = GROUPME_LINK;
-renderEvents();
-renderMerch();
+    if (!name || !email || !year || !major)
+      return showToast("⚠️ Please fill out all fields.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return showToast("⚠️ Please enter a valid email address.");
+
+    if (MAILING_LIST_FORM_URL) {
+      const body = new URLSearchParams();
+      body.append(MAILING_LIST_NAME_FIELD,  name);
+      body.append(MAILING_LIST_EMAIL_FIELD, email);
+      body.append(MAILING_LIST_YEAR_FIELD,  year);
+      body.append(MAILING_LIST_MAJOR_FIELD, major);
+      fetch(MAILING_LIST_FORM_URL, { method:"POST", mode:"no-cors", body })
+              .then(() => {
+                showToast("✅ You're subscribed! Check your inbox soon.");
+                document.getElementById("ml-name").value  = "";
+                document.getElementById("ml-email").value = "";
+                document.getElementById("ml-year").value  = "";
+                document.getElementById("ml-major").value = "";
+              })
+              .catch(() => showToast("⚠️ Something went wrong — please try again."));
+    } else {
+      window.location.href =
+              `mailto:ieeepitt@pitt.edu?subject=Mailing%20List%20Signup&body=Name:%20${encodeURIComponent(name)}%0AEmail:%20${encodeURIComponent(email)}%0AYear:%20${encodeURIComponent(year)}%0AMajor:%20${encodeURIComponent(major)}`;
+      showToast("✅ Opening your email client — thanks!");
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 3600);
+  }
+
+  // Init
+  document.getElementById("groupme-btn").href = GROUPME_LINK;
+  renderEvents();
+  renderMerch();
 </script>
 </body>
 </html>

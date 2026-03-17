@@ -22,6 +22,7 @@ Live site: [https://pittssoeieee.github.io/ieeepitt.github.io/](https://pittssoe
     - [Google Form Mailing List](#google-form-mailing-list)
 7. [Style & Branding Reference](#style--branding-reference)
 8. [Troubleshooting](#troubleshooting)
+9. [Future Improvements](#future-improvements)
 
 ---
 
@@ -299,3 +300,12 @@ The site uses IEEE's official brand colors. If you ever need to regenerate or re
 
 **I want to ask an AI to make changes to the site**  
 → Paste the full contents of `index.html` into Claude (or another AI tool) and describe what you want changed. It can regenerate the file with your requested edits while preserving the rest of the site.
+
+## Future Improvements
+
+It is the constitutional responsibility of the webmaster to maintain the operation of this site throughout the duration of their elected semester. It is also imperative that the webmaster makes any necessary improvements to the site as they deem fit. Potential improvements include:
+
+1. Adding an officer page to the website with pictures and descriptions of the current admin.
+2. To add a board-created Pitt IEEE logo to the website.
+3. To update and maintain the README for future site contributors.
+4. Refactoring the HTML behavior / functions to improve performance.

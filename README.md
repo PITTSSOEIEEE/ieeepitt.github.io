@@ -7,24 +7,50 @@ Live site: [https://pittssoeieee.github.io/ieeepitt.github.io/](https://pittssoe
 
 ## Table of Contents
 
-1. [Project Structure](#project-structure)
-2. [How to Edit the Site](#how-to-edit-the-site)
+1. [Developer Steps](#developer-steps)
+2. [Project Structure](#project-structure)
+3. [How to Edit the Site](#how-to-edit-the-site)
     - [Editing Events](#editing-events)
     - [Editing Merch](#editing-merch)
     - [Updating the GroupMe Link](#updating-the-groupme-link)
     - [Updating the Mailing List](#updating-the-mailing-list)
     - [Updating Contact Info & Footer](#updating-contact-info--footer)
-3. [How to Add a Logo](#how-to-add-a-logo)
-4. [How to Add Merch Product Photos](#how-to-add-merch-product-photos)
-5. [Deploying Changes](#deploying-changes)
-6. [Setting Up Integrations (First-Time)](#setting-up-integrations-first-time)
+4. [How to Add a Logo](#how-to-add-a-logo)
+5. [How to Add Merch Product Photos](#how-to-add-merch-product-photos)
+6. [Deploying Changes](#deploying-changes)
+7. [Setting Up Integrations (First-Time)](#setting-up-integrations-first-time)
     - [Stripe Payment Links](#stripe-payment-links)
     - [Google Form Mailing List](#google-form-mailing-list)
-7. [Style & Branding Reference](#style--branding-reference)
-8. [Troubleshooting](#troubleshooting)
-9. [Future Improvements](#future-improvements)
+8. [Style & Branding Reference](#style--branding-reference)
+9. [Troubleshooting](#troubleshooting)
+10. [Future Improvements](#future-improvements)
 
 ---
+
+## Developer Steps
+
+1. Open GitHub Desktop. From the Main branch, fetch origin and pull the latest changes. 
+2. When working on an issue, create a new branch directly from main. It is recommended to create the branch directly from the corresponding development issue.
+   - Create new branches from the remote repository at https://github.com/PITTSSOEIEEE/ieeepitt.github.io.
+   - Go to the "Issues" section of the repository and scroll down to the "Development" topic on the bottom right - create branches from here.
+   - Branches should be named with your Pitt username and a quick description of the change you're making. For example: "mtk67-add-links-for-sophomore-shirts".
+3. Return to the GitHub desktop app and fetch origin again - then switch to the branch you have just created.
+4. Open your IDE and run `git branch` in your terminal to ensure that you are now editing the proper branch and are no longer on Main. 
+5. Make all of your necessary changes to address your issue - commit frequently as you go and add appropriate descriptions. 
+6. Before creating a Pull Request, squash all of your commits into 1 (maybe 2 for large issues) in GitHub Desktop. Squashing will require you to force push to your branch and rewrite branch history.
+   - Squashing is done under the "History" tab in GitHub desktop. Select all the commits you wish to squash and right-click to select the option to do so.
+   - Do NOT attempt to squash commits that exist on main before the commit that you branched from.
+   - Make sure to update the commit description when you squash. GitHub will automatically aggregate all messages from previous commits into one large message - delete this and write a commit message covering all the functionality changes from all commits (keep it concise).
+7. Continuing in GitHub desktop, rebase all of your changes onto the main branch
+   - Go to Branch → Rebase Current Branch...
+8. Create a Pull Request on the remote GitHub repository and add AT MINIMUM 1 other reviewer (use your discretion to add the proper quantity of reviewers based on the size of your issue).
+   - Assign yourself the pull request and add reviewers. All other labels, projects, milestones, etc. can be left blank unless deemed necessary.
+9. Address any and all comments on your Pull Request by adding commits to your branch. 
+10. Once your Pull Request has been marked as approved, squash all of your commits (ensure that a proper summary to the commit is added with all completed work). 
+11. Rebase your changes onto Main and check that none of your code reverts files back to unwanted previous commits. 
+12. Merge your Pull Request. 
+13. Delete your branch (this should automatically be done by GitHub). 
+14. Add comments to the corresponding issue, mark the issue as resolved, and create other issues as necessary.
 
 ## Project Structure
 
@@ -303,7 +329,7 @@ The site uses IEEE's official brand colors. If you ever need to regenerate or re
 
 ## Future Improvements
 
-It is the constitutional responsibility of the webmaster to maintain the operation of this site throughout the duration of their elected semester. It is also imperative that the webmaster makes any necessary improvements to the site as they deem fit. Potential improvements include:
+It is the constitutional responsibility of the webmaster to maintain the operation of this site throughout the duration of their elected semester. It is also imperative that the webmaster makes any necessary improvements to the site as they deem fit. Some good examples of potential projects include:
 
 1. Adding an officer page to the website with pictures and descriptions of the current admin.
 2. To add a board-created Pitt IEEE logo to the website.
